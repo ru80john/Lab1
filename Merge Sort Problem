@@ -1,0 +1,63 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+using LL = long long int;
+
+void merge_and_sort(vector<LL> &arr, int l, int r)
+{
+    int mid = (l + r) / 2;
+    int i = l, j = mid + 1;
+    vector<LL> tmp;
+    while (i <= mid && j <= r) {
+        if (arr[i] > arr[j]) {
+            tmp.emplace_back(arr[i]);
+            i++;
+        }
+        else{
+            tmp.emplace_back(arr[j]);
+            j++;
+        }
+    }
+    while (i <= mid) {
+        tmp.emplace_back(arr[i]);
+        i++;
+    }
+    while (j <= r) {
+        tmp.emplace_back(arr[j]);
+        j++;
+    }
+    for (int i = 0; i < tmp.size(); i++) {
+        arr[l + i] = tmp[i];
+    }
+}
+
+void divide(vector<LL> &arr, int l, int r)
+{
+    if (l == r) {
+        return;
+    }
+    else{
+        int mid = (l + r) / 2;
+        divide(arr, l, mid);
+        divide(arr, mid+1, r);
+        merge_and_sort(arr, l, r);
+    }
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    vector<LL> arr(n);
+    for (int i = 0; i < n; ++i) {
+        int a;
+        cin >> arr[i];
+    }
+    divide(arr, 0, n-1);
+    for (int i = 0; i < n; ++i) {
+        cout << arr[i] << " ";
+    }
+
+    return 0;
+}

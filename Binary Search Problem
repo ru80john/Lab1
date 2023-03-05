@@ -1,0 +1,41 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+using LL = long long int;
+
+char binary(int m, vector<LL> &a){
+    int left = 0;
+    int right = a.size() - 1;
+    while(left <= right){
+        int mid = (left + right)/2;
+        if(m == a[mid]){
+            return 'Y';
+        }else if(m > a[mid]){
+            right = mid - 1;
+        }else{
+            left = mid + 1;
+        }
+    }
+    return 'N';
+}
+
+int main(){
+    int an;
+    int qn;
+    cin >> an;
+    cin >> qn;
+    vector<LL> a(an);
+    vector<LL> q(qn);
+    for(int i = 0; i < a.size(); i++){
+        int n;
+        cin >> n;
+        a[i] = n;
+    }
+    for(int i = 0; i < q.size(); i++){
+        int m;
+        cin >> m;
+        cout << binary(m, a) << ' ';
+    }
+
+}
